@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>設定</title>
+<style>
+ body{font-family:system-ui;margin:0;padding:16px;background:#f5f5f5;}
+ .card{background:#fff;padding:20px;border-radius:8px;max-width:480px;margin:auto;display:flex;flex-direction:column;gap:24px;}
+ section{display:flex;flex-direction:column;gap:8px;}
+ .uid-row,.slider-row,.toggle-row{display:flex;align-items:center;gap:8px;}
+ input[type=text]{flex:1;padding:4px;}
+ button{padding:4px 8px;}
+ .toast{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:#333;color:#fff;padding:8px 16px;border-radius:4px;opacity:0;transition:opacity .3s;}
+ .toast.show{opacity:1;}
+</style>
+</head>
+<body>
+<div class="card">
+  <section>
+    <h2>現在のUID（コピー）</h2>
+    <div class="uid-row">
+      <input id="uid" type="text" readonly>
+      <button id="copy-btn">コピー</button>
+    </div>
+  </section>
+  <section>
+    <h2>位置情報の登録（任意）</h2>
+    <button id="loc-btn">位置情報を登録</button>
+  </section>
+  <section>
+    <h2>HPしきい値（20% 初期値）</h2>
+    <div class="slider-row">
+      <input id="hp-threshold" type="range" min="0" max="50" value="20">
+      <span id="hp-val">20%</span>
+    </div>
+  </section>
+  <section>
+    <h2>フィードバックON/OFF（1日1回チェックイン）</h2>
+    <div class="toggle-row">
+      <input id="feedback-toggle" type="checkbox">
+      <span id="fb-label">OFF</span>
+    </div>
+  </section>
+</div>
+<div id="toast" class="toast"></div>
+<script src="options.js"></script>
+</body>
+</html>
