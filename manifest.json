@@ -1,0 +1,13 @@
+{
+ "manifest_version": 3,
+ "name": "HPリング",
+ "version": "1.0",
+ "description": "HPリングを表示",
+ "permissions": ["storage","tabs"],
+ "action": {"default_popup": "popup.html"},
+ "content_scripts": [{
+  "matches": ["<all_urls>"],
+  "js": ["content.js"],
+  "css": ["overlay.css"]
+ }]
+}
