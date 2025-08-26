@@ -39,6 +39,13 @@ function create(){
  sub=document.createElement("div");
  sub.className="hp-sub";
  wrap.appendChild(sub);
+ const gear=document.createElement("div");
+ gear.className="gear-btn";
+ gear.textContent="⚙";
+ gear.title="設定";
+ gear.addEventListener("click",e=>{e.stopPropagation();chrome.runtime.openOptionsPage();});
+ gear.addEventListener("mousedown",e=>e.stopPropagation());
+ wrap.appendChild(gear);
  document.body.appendChild(wrap);
  c=2*Math.PI*45;
  progress.style.strokeDasharray=c;
