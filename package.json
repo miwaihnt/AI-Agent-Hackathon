@@ -1,0 +1,21 @@
+{
+  "name": "04_hackthon",
+  "version": "1.0.0",
+  "description": "**Google Cloud Japan AI Hackathon Vol.3** 提出作品",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/miwaihnt/AI-Agent-Hackathon.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/miwaihnt/AI-Agent-Hackathon/issues"
+  },
+  "homepage": "https://github.com/miwaihnt/AI-Agent-Hackathon#readme"
+}

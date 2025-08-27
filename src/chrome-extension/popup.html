@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>HP Planner</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>HP Planner</h1>
+      <button class="settings-btn" id="settingsBtn" title="設定">⚙️</button>
+    </div>
+    
+    <div class="hp-display">
+      <div class="hp-container">
+        <svg class="hp-ring" viewBox="0 0 100 100">
+          <!-- 背景円 -->
+          <circle cx="50" cy="50" r="40" class="hp-bg-circle"/>
+          <!-- 進捗円 -->
+          <circle cx="50" cy="50" r="40" class="hp-progress-circle hp-high" 
+                  stroke-dasharray="251.2" stroke-dashoffset="62.8"/>
+        </svg>
+        <div class="hp-text">
+          <span class="hp-value">75</span>
+          <span class="hp-unit">%</span>
+        </div>
+      </div>
+      
+      <div class="hp-info">
+        <div class="hp-status">良好</div>
+        <div class="hp-reason">晴れで過ごしやすい一日です</div>
+        <div class="hp-time">最終更新: 09:30</div>
+      </div>
+    </div>
+    
+    <div class="actions">
+      <button class="action-btn primary" id="refreshBtn">更新</button>
+      <button class="action-btn secondary" id="breakBtn">5分休憩</button>
+    </div>
+  </div>
+  
+  <!-- トースト通知コンテナ -->
+  <div id="toast-container" class="toast-container">
+    <!-- 動的に通知を挿入 -->
+  </div>
+  
+  <script src="popup.js"></script>
+</body>
+</html>

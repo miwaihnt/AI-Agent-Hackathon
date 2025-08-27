@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>HP Planner Icon Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f0f0;
+            margin: 20px;
+        }
+        .icon-container {
+            display: inline-block;
+            margin: 10px;
+            text-align: center;
+        }
+        canvas {
+            border: 1px solid #ccc;
+            background: white;
+        }
+        .controls {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        button {
+            background: #2196F3;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #1976D2;
+        }
+    </style>
+</head>
+<body>
+    <h1>🎯 HP Planner Icon Generator</h1>
+    
+    <div class="controls">
+        <label>HP値: <input type="range" id="hpValue" min="0" max="100" value="75"> <span id="hpDisplay">75</span>%</label><br><br>
+        <button onclick="generateIcons()">アイコン生成</button>
+        <button onclick="downloadAll()">全サイズダウンロード</button>
+    </div>
+    
+    <div id="iconContainer">
+        <div class="icon-container">
+            <canvas id="icon16" width="16" height="16"></canvas>
+            <br>16x16
+        </div>
+        <div class="icon-container">
+            <canvas id="icon32" width="32" height="32"></canvas>
+            <br>32x32
+        </div>
+        <div class="icon-container">
+            <canvas id="icon48" width="48" height="48"></canvas>
+            <br>48x48
+        </div>
+        <div class="icon-container">
+            <canvas id="icon128" width="128" height="128"></canvas>
+            <br>128x128
+        </div>
+    </div>
+
+    <script>
+        let currentHP = 75;
+        
+        document.getElementById('hpValue').addEventListener('input', function(e) {
+            currentHP = parseInt(e.target.value);
+            document.getElementById('hpDisplay').textContent = currentHP;
+            generateIcons();
+        });
+        
+        function generateIcons() {
+            const sizes = [16, 32, 48, 128];
+            sizes.forEach(size => {
+                drawIcon(size, currentHP);
+            });
+        }
+        
+        function drawIcon(size, hp) {
+            const canvas = document.getElementById(`icon${size}`);
+            const ctx = canvas.getContext('2d');
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, size, size);
+            
+            const centerX = size / 2;
+            const centerY = size / 2;
+            const radius = size / 2 - 2;
+            
+            // Background circle
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
+            ctx.fillStyle = '#f0f0f0';
+            ctx.fill();
+            ctx.strokeStyle = '#ddd';
+            ctx.lineWidth = 1;
+            ctx.stroke();
+            
+            // HP progress circle
+            const progress = hp / 100;
+            const startAngle = -Math.PI / 2; // Start from top
+            const endAngle = startAngle + (2 * Math.PI * progress);
+            
+            // HP color based on value
+            let hpColor;
+            if (hp >= 60) hpColor = '#4CAF50';      // Green
+            else if (hp >= 30) hpColor = '#FF9800'; // Orange
+            else if (hp >= 15) hpColor = '#F44336'; // Red
+            else hpColor = '#D32F2F';               // Dark red
+            
+            // Draw progress arc
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, radius - 2, startAngle, endAngle);
+            ctx.strokeStyle = hpColor;
+            ctx.lineWidth = Math.max(1, size / 16);
+            ctx.lineCap = 'round';
+            ctx.stroke();
+            
+            // HP text (for larger sizes)
+            if (size >= 32) {
+                ctx.fillStyle = hpColor;
+                ctx.font = `bold ${Math.max(8, size / 4)}px Arial`;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                
+                if (size >= 48) {
+                    ctx.fillText(`${hp}%`, centerX, centerY);
+                } else {
+                    ctx.fillText(`${hp}`, centerX, centerY);
+                }
+            }
+            
+            // Small dot for very small sizes
+            if (size <= 16) {
+                ctx.beginPath();
+                ctx.arc(centerX, centerY, 2, 0, 2 * Math.PI);
+                ctx.fillStyle = hpColor;
+                ctx.fill();
+            }
+        }
+        
+        function downloadIcon(size) {
+            const canvas = document.getElementById(`icon${size}`);
+            const link = document.createElement('a');
+            link.download = `icon${size}.png`;
+            link.href = canvas.toDataURL();
+            link.click();
+        }
+        
+        function downloadAll() {
+            const sizes = [16, 32, 48, 128];
+            sizes.forEach(size => {
+                setTimeout(() => downloadIcon(size), size); // Small delay to avoid blocking
+            });
+        }
+        
+        // Initial generation
+        generateIcons();
+    </script>
+</body>
+</html>

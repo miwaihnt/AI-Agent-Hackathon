@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>HP Planner 設定</title>
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <h1>🎯 HP Planner 設定</h1>
+      <p class="subtitle">疲労度管理・AI Agent設定</p>
+    </header>
+    
+    <!-- HP計算係数設定 -->
+    <section class="section">
+      <h2>⚙️ HP計算係数</h2>
+      <div class="coef-grid">
+        <div class="coef-item">
+          <label for="naturalDecay">自然減衰 (/15分)</label>
+          <div class="slider-container">
+            <span class="slider-label-left">少ない</span>
+            <input type="range" id="naturalDecay" min="0" max="2" step="0.1" value="0.5">
+            <span class="slider-label-right">多い</span>
+            <span class="coef-value">0.5 HP</span>
+          </div>
+          <p class="coef-description">何もしなくても15分で減少するHP量（右に動かすほど疲れやすい）</p>
+        </div>
+        
+        <div class="coef-item">
+          <label for="typeDecision">会議係数 - 決定会議</label>
+          <div class="slider-container">
+            <span class="slider-label-left">楽</span>
+            <input type="range" id="typeDecision" min="0.5" max="4" step="0.1" value="2.0">
+            <span class="slider-label-right">疲れる</span>
+            <span class="coef-value">2.0 倍</span>
+          </div>
+          <p class="coef-description">決定会議の疲労度倍率（右に動かすほど決定会議で疲れやすい）</p>
+        </div>
+        
+        <div class="coef-item">
+          <label for="typeBrainstorm">会議係数 - ブレインストーミング</label>
+          <div class="slider-container">
+            <span class="slider-label-left">楽</span>
+            <input type="range" id="typeBrainstorm" min="0.5" max="4" step="0.1" value="2.5">
+            <span class="slider-label-right">疲れる</span>
+            <span class="coef-value">2.5 倍</span>
+          </div>
+          <p class="coef-description">ブレインストーミングの疲労度倍率</p>
+        </div>
+        
+        <div class="coef-item">
+          <label for="typeReport">会議係数 - 報告会議</label>
+          <div class="slider-container">
+            <span class="slider-label-left">楽</span>
+            <input type="range" id="typeReport" min="0.5" max="4" step="0.1" value="1.0">
+            <span class="slider-label-right">疲れる</span>
+            <span class="coef-value">1.0 倍</span>
+          </div>
+          <p class="coef-description">報告会議の疲労度倍率</p>
+        </div>
+        
+        <div class="coef-item">
+          <label for="lengthScale">長時間係数</label>
+          <div class="slider-container">
+            <span class="slider-label-left">影響小</span>
+            <input type="range" id="lengthScale" min="0" max="0.5" step="0.05" value="0.2">
+            <span class="slider-label-right">影響大</span>
+            <span class="coef-value">0.2</span>
+          </div>
+          <p class="coef-description">会議が長くなるほどの追加疲労（右ほど長時間会議で疲れる）</p>
+        </div>
+        
+        <div class="coef-item">
+          <label for="attendeeStep">参加者係数</label>
+          <div class="slider-container">
+            <span class="slider-label-left">影響小</span>
+            <input type="range" id="attendeeStep" min="0" max="0.5" step="0.05" value="0.2">
+            <span class="slider-label-right">影響大</span>
+            <span class="coef-value">0.2 / 人</span>
+          </div>
+          <p class="coef-description">3人目以降の参加者による追加疲労（右ほど大人数で疲れる）</p>
+        </div>
+      </div>
+    </section>
+    
+    <!-- 通知設定 -->
+    <section class="section">
+      <h2>🔔 通知設定</h2>
+      <div class="notification-settings">
+        <div class="setting-item">
+          <label class="checkbox-label">
+            <input type="checkbox" id="enableNotifications" checked>
+            <span class="checkmark"></span>
+            通知を有効化
+          </label>
+        </div>
+        
+        <div class="threshold-settings">
+          <div class="threshold-item">
+            <label for="cautionThreshold">注意閾値</label>
+            <div class="slider-container">
+              <input type="range" id="cautionThreshold" min="20" max="60" value="40">
+              <span class="threshold-value">40%</span>
+            </div>
+            <p class="threshold-description">軽い疲労のお知らせ</p>
+          </div>
+          
+          <div class="threshold-item">
+            <label for="warningThreshold">警告閾値</label>
+            <div class="slider-container">
+              <input type="range" id="warningThreshold" min="10" max="40" value="25">
+              <span class="threshold-value">25%</span>
+            </div>
+            <p class="threshold-description">休憩推奨のお知らせ</p>
+          </div>
+          
+          <div class="threshold-item">
+            <label for="criticalThreshold">危険閾値</label>
+            <div class="slider-container">
+              <input type="range" id="criticalThreshold" min="5" max="20" value="10">
+              <span class="threshold-value">10%</span>
+            </div>
+            <p class="threshold-description">緊急休憩が必要</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- AI Agent設定 -->
+    <section class="section">
+      <h2>🤖 AI Agent設定</h2>
+      <div class="ai-settings">
+        <div class="setting-item">
+          <label class="checkbox-label">
+            <input type="checkbox" id="enableHPPlanner" checked>
+            <span class="checkmark"></span>
+            HPプランナー (天気→HP予測)
+          </label>
+        </div>
+        
+        <div class="setting-item">
+          <label class="checkbox-label">
+            <input type="checkbox" id="enableMeetingAnalyzer" checked>
+            <span class="checkmark"></span>
+            会議メタ推定 (タイトル→種類判定)
+          </label>
+        </div>
+        
+        <div class="setting-item">
+          <label class="checkbox-label">
+            <input type="checkbox" id="enableMeetingNavigator" checked>
+            <span class="checkmark"></span>
+            会議ナビゲータ (最適化提案)
+          </label>
+        </div>
+        
+        <div class="setting-item">
+          <label class="checkbox-label">
+            <input type="checkbox" id="enableBreakInserter" checked>
+            <span class="checkmark"></span>
+            ブレイク・インサータ (休憩提案)
+          </label>
+        </div>
+      </div>
+    </section>
+    
+    <!-- デバッグ・開発設定 -->
+    <section class="section">
+      <h2>🛠️ デバッグ・開発</h2>
+      <div class="debug-controls">
+        <div class="setting-item">
+          <label class="checkbox-label">
+            <input type="checkbox" id="enableMockData" checked>
+            <span class="checkmark"></span>
+            モックデータを使用 (開発用)
+          </label>
+        </div>
+        
+        <div class="setting-item">
+          <label class="checkbox-label">
+            <input type="checkbox" id="enableDebugLogs">
+            <span class="checkmark"></span>
+            詳細ログを出力
+          </label>
+        </div>
+        
+        <div class="debug-buttons">
+          <button class="debug-btn" id="resetHP">HP値リセット (75%)</button>
+          <button class="debug-btn" id="simulateMeeting">テスト会議実行</button>
+          <button class="debug-btn" id="testNotification">通知テスト</button>
+          <button class="debug-btn" id="exportData">データエクスポート</button>
+        </div>
+      </div>
+      
+      <div class="debug-info">
+        <h3>デバッグ情報</h3>
+        <pre id="debugOutput">読み込み中...</pre>
+      </div>
+    </section>
+    
+    <!-- 保存・リセット -->
+    <footer class="footer">
+      <div class="footer-buttons">
+        <button class="btn btn-secondary" id="resetDefaults">デフォルトに戻す</button>
+        <button class="btn btn-primary" id="saveSettings">設定を保存</button>
+      </div>
+      <p class="footer-note">設定は自動的に保存され、即座に反映されます</p>
+    </footer>
+  </div>
+  
+  <script src="options.js"></script>
+</body>
+</html>

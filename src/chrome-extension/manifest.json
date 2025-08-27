@@ -1,0 +1,19 @@
+{
+  "manifest_version": 3,
+  "name": "HP Planner",
+  "version": "1.0.0",
+  "description": "疲労度管理による業務効率化支援",
+  "permissions": [
+    "storage",
+    "alarms",
+    "activeTab"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "HP Planner"
+  },
+  "options_page": "options.html"
+}
