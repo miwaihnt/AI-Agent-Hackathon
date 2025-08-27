@@ -3,7 +3,7 @@
  "name": "HPリング",
  "version": "1.0",
  "description": "HPリングを表示",
- "permissions": ["storage","tabs"],
+ "permissions": ["storage"],
  "action": {"default_popup": "popup.html"},
  "options_page": "options.html",
  "content_scripts": [{

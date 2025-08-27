@@ -43,7 +43,14 @@ function create(){
  gear.className="gear-btn";
  gear.textContent="⚙";
  gear.title="設定";
- gear.addEventListener("click",e=>{e.stopPropagation();chrome.runtime.openOptionsPage();});
+ gear.addEventListener("click",e=>{
+  e.stopPropagation();
+  if (chrome?.runtime?.openOptionsPage) {
+   chrome.runtime.openOptionsPage();
+  } else {
+   window.open(chrome.runtime.getURL("options.html"), "_blank");
+  }
+ });
  gear.addEventListener("mousedown",e=>e.stopPropagation());
  wrap.appendChild(gear);
  document.body.appendChild(wrap);
@@ -69,17 +76,24 @@ function getHP(){
  return last;
 }
 function load(){
- chrome.storage.sync.get(["hpExtPos","hpExtMode"],res=>{
-  if(res.hpExtPos){
-   wrap.style.left=res.hpExtPos.left+"px";
-   wrap.style.top=res.hpExtPos.top+"px";
-  }else{
-   wrap.style.right="16px";
-   wrap.style.bottom="16px";
-  }
-  USE_STATIC_HP=res.hpExtMode==="timeline"?false:true;
+ if(chrome?.storage?.sync){
+  chrome.storage.sync.get(["hpExtPos","hpExtMode"],res=>{
+   if(res.hpExtPos){
+    wrap.style.left=res.hpExtPos.left+"px";
+    wrap.style.top=res.hpExtPos.top+"px";
+   }else{
+    wrap.style.right="16px";
+    wrap.style.bottom="16px";
+   }
+   USE_STATIC_HP=res.hpExtMode==="timeline"?false:true;
+   update();
+  });
+ }else{
+  wrap.style.right="16px";
+  wrap.style.bottom="16px";
+  USE_STATIC_HP=true;
   update();
- });
+ }
 }
 function drag(){
  let sx,sy,dragging=false;
@@ -104,16 +118,20 @@ function drag(){
   if(!dragging)return;
   dragging=false;
   wrap.style.cursor="grab";
-  chrome.storage.sync.set({hpExtPos:{left:parseInt(wrap.style.left),top:parseInt(wrap.style.top)}});
+  if(chrome?.storage?.sync){
+   chrome.storage.sync.set({hpExtPos:{left:parseInt(wrap.style.left),top:parseInt(wrap.style.top)}});
+  }
  });
 }
 create();
 load();
 drag();
-chrome.storage.onChanged.addListener(ch=>{
- if(ch.hpExtMode){
-  USE_STATIC_HP=ch.hpExtMode.newValue==="timeline"?false:true;
-  update();
- }
-});
+if(chrome?.storage?.onChanged){
+ chrome.storage.onChanged.addListener(ch=>{
+  if(ch.hpExtMode){
+   USE_STATIC_HP=ch.hpExtMode.newValue==="timeline"?false:true;
+   update();
+  }
+ });
+}
 setInterval(update,30000);
